@@ -16,6 +16,14 @@ async function run() {
         await client.connect();
         const itemCollection = client.db("assignment11").collection("items");
 
+        // get six products for home page
+        app.get("/sixProducts", async (req, res) => {
+            const query = {};
+            const cursor = itemCollection.find(query).sort({ quantity: -1 }).limit(6);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
+
         // add item
         app.post("/additem", async (req, res) => {
             const item = req.body;
