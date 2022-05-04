@@ -40,6 +40,14 @@ async function run() {
             res.send(items);
         });
 
+        // get one sepical price products
+        app.get("/sepicalPrice", async (req, res) => {
+            const query = {};
+            const cursor = itemCollection.find(query).sort({ price: +1 }).limit(1);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
+
         // add item
         app.post("/additem", async (req, res) => {
             const item = req.body;
