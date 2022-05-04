@@ -24,6 +24,14 @@ async function run() {
             res.send(items);
         });
 
+        // get one max qty products
+        app.get("/sepicalQtyOne", async (req, res) => {
+            const query = {};
+            const cursor = itemCollection.find(query).sort({ quantity: +1 }).limit(1);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
+
         // add item
         app.post("/additem", async (req, res) => {
             const item = req.body;
