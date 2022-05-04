@@ -48,6 +48,12 @@ async function run() {
             res.send(items);
         });
 
+        // count items
+        app.get("/itemscount", async (req, res) => {
+            const count = await itemCollection.estimatedDocumentCount();
+            res.json(count);
+        });
+
         // add item
         app.post("/additem", async (req, res) => {
             const item = req.body;
