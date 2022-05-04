@@ -16,6 +16,21 @@ async function run() {
         await client.connect();
         const itemCollection = client.db("assignment11").collection("items");
 
+        // get items
+        app.get("/items", async (req, res) => {
+            const pageNum = parseInt(req.query.pageNum);
+            const itemsNum = parseInt(req.query.itemsNum);
+            const query = {};
+            const cursor = itemCollection.find(query);
+            let items;
+            if (pageNum || itemsNum) {
+                items = await cursor.skip(pageNum * itemsNum).limit(itemsNum).toArray();
+            } else {
+                items = await cursor.toArray();
+            }
+            res.send(items);
+        });
+
         // get six products for home page
         app.get("/sixProducts", async (req, res) => {
             const query = {};
