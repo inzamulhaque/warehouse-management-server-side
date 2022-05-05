@@ -77,6 +77,15 @@ async function run() {
             res.json(count);
         });
 
+        // get my items
+        app.get("/myitems", async (req, res) => {
+            const { email } = req.query;
+            const query = { email };
+            const cursor = itemCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
+
         // add item
         app.post("/additem", async (req, res) => {
             const item = req.body;
