@@ -133,6 +133,14 @@ async function run() {
             res.send(result);
         });
 
+        // get orders
+        app.get("/getorders", async (req, res) => {
+            const query = {};
+            const cursor = orderCollection.find(query)
+            const orders = await cursor.toArray();
+            res.send(orders);
+        });
+
         // update item 
         app.put("/update/:id", async (req, res) => {
             const id = req.params.id;
