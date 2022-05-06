@@ -33,6 +33,7 @@ async function run() {
     try {
         await client.connect();
         const itemCollection = client.db("assignment11").collection("items");
+        const orderCollection = client.db("assignment11").collection("order");
 
         // auth token
         app.post("/signin", (req, res) => {
@@ -122,6 +123,13 @@ async function run() {
         app.post("/additem", async (req, res) => {
             const item = req.body;
             const result = await itemCollection.insertOne(item);
+            res.send(result);
+        });
+
+        // add orders
+        app.post("/addorders", async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
             res.send(result);
         });
 
